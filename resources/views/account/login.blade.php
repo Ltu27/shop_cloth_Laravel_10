@@ -67,16 +67,16 @@
 
                         <hr class="mt-5 mb-4 border-secondary-subtle">
                         <div class="d-flex gap-2 justify-content-md-end">
-                            <a href="#" class="link-secondary">Create new account</a>
+                            <a href="{{ route('account.register') }}" class="link-secondary">Create new account</a>
                             <a href="#" class="link-secondary">Forgot password</a>
                         </div>
 
-                        <p class="mt-5 mb-4">Or sign in with</p>
+                        {{-- <p class="mt-5 mb-4">Or sign in with</p>
                         <div class="d-flex gap-3 flex-column flex-xl-row">
                             <a href="#" class="btn bsb-btn-xl btn-outline-primary">Google</a>
                             <a href="#" class="btn bsb-btn-xl btn-outline-primary">Facebook</a>
                             <a href="#" class="btn bsb-btn-xl btn-outline-primary">Twitter</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

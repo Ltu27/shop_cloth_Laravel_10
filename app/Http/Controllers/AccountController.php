@@ -67,17 +67,18 @@ class AccountController extends Controller
 
         if ($acc = Customer::create($data)) {
             // Mail::to($acc->email)->send(new VerifyAccount($acc));
-            // return redirect()->route('account.login')->with('ok', 'Đăng ký tài khoản thành công, bạn có thể đăng nhập ngay bây giờ!');
-            return response()->json([
-                'status' => 200,
-                'message' => 'Đăng ký tài khoản thành công, bạn có thể đăng nhập ngay bây giờ!',
-            ]);
+            return redirect()->route('account.login')->with('ok', 'Đăng ký tài khoản thành công, bạn có thể đăng nhập ngay bây giờ!');
+            // return response()->json([
+            //     'status' => 200,
+            //     'message' => 'Đăng ký tài khoản thành công, bạn có thể đăng nhập ngay bây giờ!',
+            // ]);
         }
 
-        return response()->json([
-            'status' => 500,
-            'message' => 'Có lỗi xảy ra, vui lòng kiểm tra lại!',
-        ]);
+        // return response()->json([
+        //     'status' => 500,
+        //     'message' => 'Có lỗi xảy ra, vui lòng kiểm tra lại!',
+        // ]);
+        return redirect()->back()->with('no', 'Có lỗi xảy ra, vui lòng kiểm tra lại!');
     }
 
     public function verify($email) {
