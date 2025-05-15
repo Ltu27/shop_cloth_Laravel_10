@@ -1,126 +1,4 @@
-{{-- @extends('master.main')
-@section('title', 'Đăng ký')
-@section('main')
-    
-<!-- main-area -->
-<main>
-
-    <!-- breadcrumb-area -->
-    <section class="breadcrumb-area tg-motion-effects breadcrumb-bg" data-background="uploads/bg/breadcrumb_bg.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-content">
-                        <h2 class="title">Đăng ký</h2>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Đăng ký</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- breadcrumb-area-end -->
-
-    <!-- contact-area -->
-    <section class="contact-area">
-        
-        <div class="contact-wrap">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="contact-content">
-                            <div class="section-title mb-15">
-                                <span class="sub-title">Đăng ký</span>
-                            </div>
-                            <form action="" method="POST">
-                                @csrf
-                                <div class="contact-form-wrap">
-                                    <div class="form-grp">
-                                        <input name="name" type="text" placeholder="Tên của bạn *" value="{{ old('name') }}">
-                                        @error('name')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-grp">
-                                        <input name="email" type="email" placeholder="email của bạn *" value="{{ old('email') }}">
-                                        @error('email')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-grp">
-                                        <input name="phone" type="text" placeholder="Số điện thoại của bạn *" value="{{ old('phone') }}">
-                                        @error('phone')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-grp">
-                                        <input name="address" type="text" placeholder="Địa chỉ của bạn *" value="{{ old('address') }}">
-                                        @error('address')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-grp">
-                                        <select name="gender" class="form-control">
-                                            <option value="1">Nam</option>
-                                            <option value="0">Nữ</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-grp">
-                                        <input name="password" type="password" placeholder="Mật khẩu của bạn *">
-                                        @error('password')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-grp">
-                                        <input name="confirm_password" type="password" placeholder="Nhập lại mật khẩu *">
-                                        @error('confirm_password')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <button type="submit">Tạo tài khoản</button>
-                                </div>
-                            </form>
-                            <p class="ajax-response mb-0"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- contact-area-end -->
-
-</main>
-<!-- main-area-end -->
-
-
-@endsection --}}
-
-<!DOCTYPE html>
-<html>
-<head>
-    <base href="/">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Người dùng | Đăng ký</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="ad_assets/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="ad_assets/dist/css/AdminLTE.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="ad_assets/plugins/iCheck/square/blue.css">
-</head>
-<body class="hold-transition login-page">
-<div class="login-box">
+{{-- <div class="login-box">
     <div class="login-logo">
         <a href="#"><b>Đăng ký tài khoản</b></a>
     </div>
@@ -196,6 +74,37 @@
             </div>
         </form>
     </div>
+</div> --}}
+
+<div class="modal" id="my-Register">
+    <a href="#" class="overlay-close"></a>
+    <div class="authen-modal register">
+        <h3 class="authen-modal__title">Đăng Kí</h3>
+        <div class="form-group">
+            <label for="name" class="form-label">Tên tài khoản *</label>
+            <input id="name" name="name" type="text" value="{{ old('name') }}" class="form-control">
+            @error('name') <small class="form-message">{{ $message }}</small> @enderror
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group">
+            <label for="email" class="form-label">Email *</label>
+            <input id="email" name="email" type="text" value="{{ old('email') }}" class="form-control">
+            @error('email') <small class="form-message">{{ $message }}</small> @enderror
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group">
+            <label for="password" class="form-label">Mật khẩu *</label>
+            <input id="password" name="password" type="password" class="form-control">
+            @error('password') <small class="form-message">{{ $message }}</small> @enderror
+            <span class="form-message"></span>
+        </div>
+        <div class="form-group">
+            <label for="password_confirmation" class="form-label">Nhập lại mật khẩu *</label>
+            <input id="password_confirmation" name="password_confirmation" type="password" class="form-control">
+            <span class="form-message"></span>
+        </div>
+        <div class="authen__btns">
+            <div class="btn btn--default">Đăng Kí</div>
+        </div>
+    </div>
 </div>
-</body>
-</html>
