@@ -63,13 +63,21 @@ class AccountController extends Controller
         $data = $req->validated();
 
         $data['password'] = bcrypt($req->password);
+        $data['email_verified_at'] = now();
 
         if ($acc = Customer::create($data)) {
             // Mail::to($acc->email)->send(new VerifyAccount($acc));
-            return redirect()->route('account.login')->with('ok', 'Register successfully, please check your email to verify account');
+            // return redirect()->route('account.login')->with('ok', 'Đăng ký tài khoản thành công, bạn có thể đăng nhập ngay bây giờ!');
+            return response()->json([
+                'status' => 200,
+                'message' => 'Đăng ký tài khoản thành công, bạn có thể đăng nhập ngay bây giờ!',
+            ]);
         }
 
-        return redirect()->back()->with('no', 'Something error, please try again');
+        return response()->json([
+            'status' => 500,
+            'message' => 'Có lỗi xảy ra, vui lòng kiểm tra lại!',
+        ]);
     }
 
     public function verify($email) {

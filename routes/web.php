@@ -25,9 +25,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/about-us', [HomeController::class, 'about'])->name('home.about');
-Route::get('/category/{cat}', [HomeController::class, 'category'])->name('home.category');
+Route::get('/category/{category}', [HomeController::class, 'category'])->name('home.category');
 Route::get('/product', [HomeController::class, 'getListProduct'])->name('home.listProduct');
-// Route::get('/product-detail/{product}', [HomeController::class, 'product'])->name('home.product');
+Route::get('/product-detail/{product}', [HomeController::class, 'product'])->name('home.product.detail');
 Route::get('/product-detail', [HomeController::class, 'product'])->name('home.product');
 Route::get('/contact-us', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('/favorite/{product}', [HomeController::class, 'favorite'])->name('home.favorite');

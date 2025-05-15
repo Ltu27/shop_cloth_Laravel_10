@@ -33,10 +33,10 @@ class HomeController extends Controller
         return view('home.about');
     }
 
-    public function category(Category $cat) {
-        $products = $cat->products()->paginate(9);
-        $new_products = Product::orderBy('created_at', 'DESC')->limit(3)->get();
-        return view('home.category', compact('cat', 'products', 'new_products'));
+    public function category(Category $category) {
+        $category->load('products');
+        $products = $category->products()->orderBy('id', 'DESC')->paginate(4);
+        return view('home.category', compact('category', 'products'));
     }
 
     public function getListProduct() {
@@ -45,11 +45,9 @@ class HomeController extends Controller
         return view('home.product.list-product');
     }
 
-    public function product() {
-// public function product(Product $product) {
-        // $products = Product::where('category_id', $product->category_id)->limit(12)->get();
-        // return view('home.product', compact('product', 'products'));
-        return view('home.product.product');
+    public function product(Product $product) {
+        // dd($product);
+        return view('home.product.product', compact('product'));
     }
 
     public function contact() {

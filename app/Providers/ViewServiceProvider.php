@@ -22,7 +22,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('master.main', function ($view) {
-            $categories = Category::all();
+            $categories = Category::with('products')->get();
             $view->with('categories', $categories);
         });
     }

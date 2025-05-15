@@ -5,6 +5,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Danh sách sản phẩm</title>
         <!-- Font roboto -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -12,16 +13,23 @@
         <!-- Icon fontanwesome -->
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
         <!-- Reset css & grid sytem -->
-        <link rel="stylesheet" href="./assets/css/library.css">
-        <link href="./assets/owlCarousel/assets/owl.carousel.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset( 'assets/css/library.css')}}">
+        <link href="{{ asset( 'assets/owlCarousel/assets/owl.carousel.min.css')}}" rel="stylesheet" />
         <!-- Layout -->
-        <link rel="stylesheet" href="./assets/css/common.css">
+        <link rel="stylesheet" href="{{ asset( 'assets/css/common.css')}}">
         <!-- index -->
-        <link href="./assets/css/home.css" rel="stylesheet" />
+        <link href="{{ asset('assets/css/home.css')}}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">      
 
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/product.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/productSale.css')}}">
+
+
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <!-- Owl caroucel Js-->
-        <script src="./assets/owlCarousel/owl.carousel.min.js"></script>
+        <!-- Owl caroucel Js-->     
+        <script src="{{ asset('assets/owlCarousel/owl.carousel.min.js')}}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     </head>
 
@@ -35,7 +43,7 @@
                         <span></span>
                     </div>
                     <a href="index.html" class="header__logo">
-                        <img src="./assets/logo.png" alt="">
+                        <img src="{{ asset('assets/logo.png')}}" alt="">
                     </a>
                     <div class="header__search">
                         <div class="header__search-wrap">
@@ -46,7 +54,7 @@
                         </div>
                     </div>
                     <div class="header__account">
-                        <a href="#my-Login" class="header__account-login">Đăng Nhập</a>
+                        <a href="{{ route('account.login')}}" class="header__account-login">Đăng Nhập</a>
                         <a href="#my-Register" class="header__account-register">Đăng Kí</a>
                     </div>
                     <!-- Cart -->
@@ -60,7 +68,7 @@
                                 <li class="item-order">
                                     <div class="order-wrap">
                                         <a href="product.html" class="order-img">
-                                            <img src="./assets/img/product/product1.jpg" alt="">
+                                            <img src="{{ asset('assets/img/product/product1.jpg')}}" alt="">
                                         </a>
                                         <div class="order-main">
                                             <a href="product.html" class="order-main-name">Áo sơ mi  caro kèm belt caro kèm belt Áo sơ mi caro kèm belt</a>
@@ -72,7 +80,7 @@
                                 <li class="item-order">
                                     <div class="order-wrap">
                                         <a href="product.html" class="order-img">
-                                            <img src="./assets/img/product/product1.jpg" alt="">
+                                            <img src="{{ asset('assets/img/product/product1.jpg')}}" alt="">
                                         </a>
                                         <div class="order-main">
                                             <a href="product.html" class="order-main-name">Áo sơ mi  caro kèm belt caro kèm belt Áo sơ mi caro kèm belt</a>
@@ -84,7 +92,7 @@
                                 <li class="item-order">
                                     <div class="order-wrap">
                                         <a href="product.html" class="order-img">
-                                            <img src="./assets/img/product/product1.jpg" alt="">
+                                            <img src="{{ asset('assets/img/product/product1.jpg')}}" alt="">
                                         </a>
                                         <div class="order-main">
                                             <a href="product.html" class="order-main-name">Áo sơ mi  caro kèm belt caro kèm belt Áo sơ mi caro kèm belt</a>
@@ -134,86 +142,22 @@
                     <li class="header__nav-item">
                         <a href="#" class="header__nav-link">Sản Phẩm</a>
                         <div class="sub-nav-wrap grid wide">
-                            <ul class="sub-nav">
-                                <li class="sub-nav__item">
-                                    <a href="" class="sub-nav__link heading">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc toàn thân vvv</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Khuyến mãi</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc cơ thể</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc miệng</a>
-                                </li>
-                            </ul>
-                            <ul class="sub-nav">
-                                <li class="sub-nav__item">
-                                    <a href="" class="sub-nav__link heading">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc toàn thân vvv</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Khuyến mãi</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc cơ thể</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc miệng</a>
-                                </li>
-                            </ul>
-                            <ul class="sub-nav">
-                                <li class="sub-nav__item">
-                                    <a href="" class="sub-nav__link heading">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc toàn thân vvv</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Khuyến mãi</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc cơ thể</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc miệng</a>
-                                </li>
-                            </ul>
-                            <ul class="sub-nav">
-                                <li class="sub-nav__item">
-                                    <a href="" class="sub-nav__link heading">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc toàn thân vvv</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Khuyến mãi</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc cơ thể</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Nước hoa</a>
-                                </li>
-                                <li class="sub-nav__item">
-                                    <a href="listProduct.html" class="sub-nav__link">Chăm sóc miệng</a>
-                                </li>
-                            </ul>
+                            @foreach ($categories as $category)
+                                <ul class="sub-nav">
+                                    <li class="sub-nav__item">
+                                        <a href="{{ route('home.category', $category->id) }}" class="sub-nav__link heading">
+                                            {{ $category->name }}
+                                        </a>
+                                    </li>
+                                    @foreach ($category->products as $product)
+                                        <li class="sub-nav__item">
+                                            <a href="{{ route('home.product', $product->id) }}" class="sub-nav__link">
+                                                {{ $product->name }}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            @endforeach
                         </div>
                     </li>
                     <li class="header__nav-item">
@@ -325,7 +269,7 @@
             </div>
         </div>
         <!-- Modal Form -->
-        <div class="ModalForm">
+        {{-- <div class="ModalForm">
             @include('account.login')
             @include('account.register')
             
@@ -333,7 +277,7 @@
                 <i class="fas fa-chevron-up"></i>
             </div>
 
-        </div>
+        </div> --}}
         <script>
             $('.owl-carousel.hight').owlCarousel({
                 loop: true,
@@ -396,9 +340,75 @@
                 }
             })
         </script>
+
+        <script>
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $('#btn-register').on('click', function () {
+                    const data = $('#register-form').serialize();
+
+                    $.ajax({
+                        url: '/account/register', 
+                        type: 'POST',
+                        data: data,
+                        success: function (res) {
+                            if (res.status === 200) {
+                                toastr.success(res.message);
+
+                                $('#my-Register').removeClass('show').hide(); 
+                                $('#my-Login').addClass('show').show();       
+
+                                $('#register-form')[0].reset();
+                            } else {
+                                toastr.error(res.message);
+                            }
+                        },
+                        error: function (xhr) {
+                            if (xhr.responseJSON?.errors) {
+                                Object.keys(xhr.responseJSON.errors).forEach(function (key) {
+                                    const msg = xhr.responseJSON.errors[key][0];
+                                    $(`#register-form [name="${key}"]`).next('.form-message').text(msg);
+                                });
+                            } else {
+                                toastr.error('Đăng ký thất bại!');
+                            }
+                        }
+                    });
+                });
+
+
+                $('#btn-login').on('click', function () {
+                    const data = {
+                        email: $('#my-Login input[name="email"]').val(),
+                        password: $('#my-Login input[name="password"]').val(),
+                        _token: '{{ csrf_token() }}'
+                    };
+
+                    $.post('{{ route("account.check_login") }}', data)
+                        .done(function (response) {
+                            location.reload(); 
+                            $('#my-Register').removeClass('show').hide(); 
+                            $('#my-Login').addClass('show').hide();
+                        })
+                        .fail(function (xhr) {
+                            const errors = xhr.responseJSON.errors;
+                            $('#my-Login .form-message').html('');
+                            for (const field in errors) {
+                                const message = errors[field][0];
+                                $(`#my-Login input[name="${field}"]`).siblings('.form-message').text(message);
+                            }
+                        });
+                });
+            });
+        </script>
+
         <!-- Script common -->
-        <script src="./assets/js/homeScript.js"></script>
-        <script src="./assets/js/commonscript.js"></script>
+        <script src="{{ asset('assets/js/homeScript.js')}}"></script>
+        <script src="{{ asset('assets/js/commonscript.js')}}"></script>
     </body>
 
 </html>

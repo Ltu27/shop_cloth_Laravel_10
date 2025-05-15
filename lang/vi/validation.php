@@ -195,6 +195,11 @@ return [
         'category_id' => 'Danh mục',
         'password' => 'Mật khẩu',
         'confirm_password' => 'Xác nhận mật khẩu',
+        'phone' => 'Số điện thoại',
+        'address' => 'Địa chỉ',
+        'email' => 'Email',
+        'gender' => 'Giới tính',
+        'password_confirmation' => 'Xác nhận mật khẩu',
     ],
 
 ];

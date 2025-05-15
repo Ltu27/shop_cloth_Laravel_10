@@ -5,67 +5,101 @@
 <!-- main-area -->
 <main>
 
-    <!-- ***** Main Banner Area Start ***** -->
-    <div class="page-heading" id="top">
-        <div class="container">
+    <div class="grid wide">
+        <div class="productInfo">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="inner-content">
-                        <h2>Single Product Page</h2>
-                        <span>Awesome &amp; Creative HTML CSS layout by TemplateMo</span>
+                <div class="col l-5 m-12 s-12">
+                    {{-- Carousel ảnh chính --}}
+                    <div class="owl-carousel owl-theme" id="sync1">
+                        @foreach ($product->images as $image)
+                            <a href="#" class="product">
+                                <div class="product__avt" style="background-image: url('{{ asset('storage/' . $image->url) }}')">
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                    {{-- Carousel ảnh thumbnail --}}
+                    <div class="owl-carousel owl-theme" id="sync2">
+                        @foreach ($product->images as $image)
+                            <a href="#" class="product">
+                                <div class="product__avt" style="background-image: url('{{ asset('storage/' . $image->url) }}')">
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+    
+                <div class="col l-7 m-12 s-12 pl">
+                    <div class="main__breadcrumb">
+                        <div class="breadcrumb__item"><a href="/" class="breadcrumb__link">Trang chủ</a></div>
+                        <div class="breadcrumb__item"><a href="#" class="breadcrumb__link">Cửa hàng</a></div>
+                        <div class="breadcrumb__item"><a href="#" class="breadcrumb__link">{{ $product->brand->name ?? 'Không rõ hãng' }}</a></div>
+                    </div>
+    
+                    <h3 class="productInfo__name">{{ $product->name }}</h3>
+    
+                    <div class="productInfo__price">
+                        {{ number_format($product->price, 0, ',', '.') }} <span class="priceInfo__unit">đ</span>
+                    </div>
+    
+                    <div class="productInfo__description">
+                        {!! nl2br(e($product->description)) !!}
+                    </div>
+    
+                    <div class="productInfo__addToCart">
+                        <div class="buttons_added">
+                            <input class="minus is-form" type="button" value="-" onclick="minusProduct()">
+                            <input aria-label="quantity" class="input-qty" max="10" min="1" name="" type="number" value="1">
+                            <input class="plus is-form" type="button" value="+" onclick="plusProduct()">
+                        </div>
+                        <div class="btn btn--default orange">Thêm vào giỏ</div>
+                    </div>
+    
+                    <div class="productIndfo__policy">
+                        {{-- Chính sách giữ nguyên như HTML mẫu --}}
+                    </div>
+    
+                    <div class="productIndfo__category">
+                        <p class="productIndfo__category-text">Danh mục:
+                            <a href="#" class="productIndfo__category-link">{{ $product->category->name ?? 'Chưa phân loại' }}</a>
+                        </p>
+                        <p class="productIndfo__category-text">Hãng:
+                            <a href="#" class="productIndfo__category-link">{{ $product->brand->name ?? 'Không rõ hãng' }}</a>
+                        </p>
+                        <p class="productIndfo__category-text">Số lượng đã bán: {{ $product->sold_quantity }}</p>
+                        <p class="productIndfo__category-text">Số lượng trong kho: {{ $product->stock_quantity }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        {{-- Chi tiết sản phẩm --}}
+        <div class="productDetail">
+            <div class="main__tabnine">
+                <div class="grid wide">
+                    <div class="tabs">
+                        <div class="tab-item active">Mô tả</div>
+                        <div class="tab-item">Đánh giá</div>
+                        <div class="line"></div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            <div class="productDes">
+                                <div class="productDes__title">Mô tả chi tiết</div>
+                                <p class="productDes__text">
+                                    {!! nl2br(e($product->description)) !!}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="tab-pane">
+                            {{-- Đánh giá sản phẩm, nếu có --}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- ***** Main Banner Area End ***** -->
-
-
-    <!-- ***** Product Area Starts ***** -->
-    <section class="section" id="product">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                <div class="left-images">
-                    <img src="assets/images/single-product-01.jpg" alt="">
-                    <img src="assets/images/single-product-02.jpg" alt="">
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="right-content">
-                    <h4>New Green Jacket</h4>
-                    <span class="price">$75.00</span>
-                    <ul class="stars">
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                        <li><i class="fa fa-star"></i></li>
-                    </ul>
-                    <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod kon tempor incididunt ut labore.</span>
-                    <div class="quote">
-                        <i class="fa fa-quote-left"></i><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiuski smod.</p>
-                    </div>
-                    <div class="quantity-content">
-                        <div class="left-content">
-                            <h6>No. of Orders</h6>
-                        </div>
-                        <div class="right-content">
-                            <div class="quantity buttons_added">
-                                <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button" value="+" class="plus">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="total">
-                        <h4>Total: $210.00</h4>
-                        <div class="main-border-button"><a href="#">Add To Cart</a></div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        </div>
-    </section>
-    <!-- ***** Product Area Ends ***** -->
+    
 
 </main>
 <!-- main-area-end -->

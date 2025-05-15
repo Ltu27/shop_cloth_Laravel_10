@@ -46,7 +46,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $category->load('products');
+        $products = $category->products()->orderBy('id', 'DESC')->paginate(4);
+        return view('admin.category.show', compact('category', 'products'));
     }
 
     /**
