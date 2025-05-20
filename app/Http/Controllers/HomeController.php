@@ -8,6 +8,7 @@ use App\Models\Favorite;
 use App\Models\Product;
 use App\Services\CategoryService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -19,14 +20,23 @@ class HomeController extends Controller
     }
 
     public function index() {
-        $topBanner = Banner::getBanner()->first();
-        $galleries = Banner::getBanner('gallery')->get();
 
+        // $topBanner = Banner::getBanner()->first();
+        // $galleries = Banner::getBanner('gallery')->get();
+        $authUser = Auth::guard('cus')->user();
         $new_products = Product::orderBy('created_at', 'DESC')->limit(2)->get();
         $sale_products = Product::orderBy('created_at', 'DESC')->where('sale_price', '>', 0)->limit(3)->get();
         $feature_products = Product::inRandomOrder()->limit(4)->get();
         $categories = $this->categoryService->getAll();
-        return view('home.index', compact('categories', 'topBanner', 'galleries', 'new_products', 'sale_products','feature_products'));
+        return view('home.index', compact(
+            'categories', 
+            // 'topBanner', 
+            // 'galleries', 
+            'new_products', 
+            'sale_products',
+            'feature_products',
+            'authUser'
+        ));
     }
     
     public function about() {
@@ -46,7 +56,7 @@ class HomeController extends Controller
     }
 
     public function product(Product $product) {
-        // dd($product);
+        $product->load(['cat', 'images']);
         return view('home.product.product', compact('product'));
     }
 

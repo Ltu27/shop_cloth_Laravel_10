@@ -4,13 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\CreateProductRequest;
+use App\Http\Resources\Product\ListProductResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use App\Services\ProductService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    public function __construct(
+        protected ProductService $service,
+    )
+    {
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -185,5 +194,26 @@ class ProductController extends Controller
             return redirect()->back()->with('ok', 'Delete image successfully');
         }
         return redirect()->back()->with('no', 'Something wrong, please check again');
+    }
+
+    public function getListProduct(Request $request): JsonResponse
+    {
+        $filters = $request->query('filters', []);
+        $has = $request->query('has', []);
+        $search = $request->query('search', []);
+        $sorts = $request->query('sorts', []);
+        $from = $request->query('from', []);
+        $to = $request->query('to', []);
+        $limit = $request->query('limit', 12);
+        $freeSearch = $request->query('q', '');
+        $data = $this->service->getByConditions($filters, $has, $sorts, $search, $freeSearch, [$from, $to], $limit);
+        return $this->success(
+            ListProductResource::collection($data->items()),
+            [
+                'page' => $data->currentPage(),
+                'total' => $data->total(),
+                'limit' => $data->perPage(),
+            ]
+        );
     }
 }

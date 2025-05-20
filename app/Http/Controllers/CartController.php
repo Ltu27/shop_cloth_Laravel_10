@@ -23,7 +23,7 @@ class CartController extends Controller
         if ($cartExist) {
             Cart::where([
                 'customer_id' => $cus_id,
-                'product_id' => $req->id
+                'product_id' => $product->id
             ])->increment('quantity', $quantity);
             return redirect()->route('cart.index')->with('ok', __('common.cart.update_quantity_product'));
         } else {

@@ -6,23 +6,20 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Danh sách sản phẩm</title>
+        <title>@yield('title')</title>
         <!-- Font roboto -->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
         <!-- Icon fontanwesome -->
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
         <!-- Reset css & grid sytem -->
-        <link rel="stylesheet" href="{{ asset( 'assets/css/library.css')}}">
-        <link href="{{ asset( 'assets/owlCarousel/assets/owl.carousel.min.css')}}" rel="stylesheet" />
+        <link rel="stylesheet" href="{{ asset('assets/css/library.css')}}">
+        <link href="{{ asset('assets/owlCarousel/assets/owl.carousel.min.css')}}" rel="stylesheet" />
         <!-- Layout -->
-        <link rel="stylesheet" href="{{ asset( 'assets/css/common.css')}}">
-        <!-- index -->
-        <link href="{{ asset('assets/css/home.css')}}" rel="stylesheet" />
-        <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">      
+        <link rel="stylesheet" href="{{ asset('assets/css/common.css')}}">
+        @yield('custom_css')
 
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/product.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/productSale.css')}}">
+        {{-- <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/productSale.css')}}"> --}}
 
 
         <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
@@ -42,7 +39,7 @@
                         <span></span>
                         <span></span>
                     </div>
-                    <a href="index.html" class="header__logo">
+                    <a href="{{ route('home.index') }}" class="header__logo">
                         <img src="{{ asset('assets/logo.png')}}" alt="">
                     </a>
                     <div class="header__search">
@@ -53,62 +50,47 @@
                             </a>
                         </div>
                     </div>
-                    <div class="header__account">
-                        <a href="{{ route('account.login')}}" class="header__account-login">Đăng Nhập</a>
-                        <a href="#my-Register" class="header__account-register">Đăng Kí</a>
-                    </div>
-                    <!-- Cart -->
-                    <div class="header__cart have" href="#">
-                        <i class="fas fa-shopping-basket"></i>
-                        <div class="header__cart-amount">
-                            3
+                    @if (isset($authUser))
+                        <div class="header__account">
+                            <a href="{{ route('account.logout') }}" class="header__account-login">Đăng Xuất</a>
+                            <a href="{{ route('account.profile') }}" class="header__account-register">Xin chào {{ $authUser->name }}</a>
                         </div>
-                        <div class="header__cart-wrap">
-                            <ul class="order__list">
-                                <li class="item-order">
-                                    <div class="order-wrap">
-                                        <a href="product.html" class="order-img">
-                                            <img src="{{ asset('assets/img/product/product1.jpg')}}" alt="">
-                                        </a>
-                                        <div class="order-main">
-                                            <a href="product.html" class="order-main-name">Áo sơ mi  caro kèm belt caro kèm belt Áo sơ mi caro kèm belt</a>
-                                            <div class="order-main-price">2 x 45,000 ₫</div>
-                                        </div>
-                                        <a href="product.html" class="order-close"><i class="far fa-times-circle"></i></a>
-                                    </div>
-                                </li>
-                                <li class="item-order">
-                                    <div class="order-wrap">
-                                        <a href="product.html" class="order-img">
-                                            <img src="{{ asset('assets/img/product/product1.jpg')}}" alt="">
-                                        </a>
-                                        <div class="order-main">
-                                            <a href="product.html" class="order-main-name">Áo sơ mi  caro kèm belt caro kèm belt Áo sơ mi caro kèm belt</a>
-                                            <div class="order-main-price">2 x 45,000 ₫</div>
-                                        </div>
-                                        <a href="product.html" class="order-close"><i class="far fa-times-circle"></i></a>
-                                    </div>
-                                </li>
-                                <li class="item-order">
-                                    <div class="order-wrap">
-                                        <a href="product.html" class="order-img">
-                                            <img src="{{ asset('assets/img/product/product1.jpg')}}" alt="">
-                                        </a>
-                                        <div class="order-main">
-                                            <a href="product.html" class="order-main-name">Áo sơ mi  caro kèm belt caro kèm belt Áo sơ mi caro kèm belt</a>
-                                            <div class="order-main-price">2 x 45,000 ₫</div>
-                                        </div>
-                                        <a href="product.html" class="order-close"><i class="far fa-times-circle"></i></a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="total-money">Tổng cộng: 120.000đ</div>
-                            <a href="cart.html" class="btn btn--default cart-btn">Xem giỏ hàng</a>
-                            <a href="pay.html" class="btn btn--default cart-btn orange">Thanh toán</a>
-                            <!-- norcart -->
-                            <!-- <img class="header__cart-img-nocart" src="http://www.giaybinhduong.com/images/empty-cart.png" alt=""> -->
+                        <!-- Cart -->
+                        <div class="header__cart have" href="#">
+                            <i class="fas fa-shopping-basket"></i>
+                            <div class="header__cart-amount">
+                                {{ count($carts)}}
+                            </div>
+                            <div class="header__cart-wrap">
+                                <ul class="order__list">
+                                    @foreach ($carts as $cart)
+                                        <li class="item-order">
+                                            <div class="order-wrap">
+                                                <a href="{{ route('home.product.detail', $cart->prod->id) }}" class="order-img">
+                                                    <img src="{{ asset('uploads/product/' . $cart->prod->image ?? 'product1.jpg') }}" alt="">
+                                                </a>
+                                                <div class="order-main">
+                                                    <a href="{{ route('home.product.detail', $cart->prod->id) }}" class="order-main-name">{{ $cart->prod->name }}</a>
+                                                    <div class="order-main-price">{{ $cart->quantity . ' * ' . $cart->price . 'đ'}}</div>
+                                                </div>
+                                                <a href="{{ route('home.product.detail', $cart->prod->id) }}" class="order-close"><i class="far fa-times-circle"></i></a>
+                                            </div>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                <div class="total-money">Tổng cộng: {{ number_format($total, 0, ',', '.') }} đ</div>
+                                <a href="{{ route('cart.index') }}" class="btn btn--default cart-btn">Xem giỏ hàng</a>
+                                <a href="pay.html" class="btn btn--default cart-btn orange">Thanh toán</a>
+                                <!-- norcart -->
+                                <img class="header__cart-img-nocart" src="http://www.giaybinhduong.com/images/empty-cart.png" alt="">
+                            </div>
                         </div>
-                    </div>
+                    @else
+                        <div class="header__account">
+                            <a href="{{ route('account.login')}}" class="header__account-login">Đăng Nhập</a>
+                            <a href="{{ route('account.register')}}" class="header__account-register">Đăng Kí</a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <!-- Menu -->
@@ -151,7 +133,7 @@
                                     </li>
                                     @foreach ($category->products as $product)
                                         <li class="sub-nav__item">
-                                            <a href="{{ route('home.product', $product->id) }}" class="sub-nav__link">
+                                            <a href="{{ route('home.product.detail', $product->id) }}" class="sub-nav__link">
                                                 {{ $product->name }}
                                             </a>
                                         </li>
@@ -169,6 +151,9 @@
                 </ul>
             </div>
         </div>
+        <div class="up-top" id="upTop" onclick="goToTop()">
+            <i class="fas fa-chevron-up"></i>
+        </div>
 
         @yield('main')
         
@@ -178,21 +163,11 @@
                     <div class="col l-3 m-6 s-12">
                         <h3 class="footer__title">Menu</h3>
                         <ul class="footer__list">
-                            <li class="footer__item">
-                                <a href="#" class="footer__link">Trang điểm</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#" class="footer__link">Chăm sóc da</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#" class="footer__link">Chăm sóc tóc</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#" class="footer__link">Nước hoa</a>
-                            </li>
-                            <li class="footer__item">
-                                <a href="#" class="footer__link">Chăm sóc toàn thân </a>
-                            </li>
+                            @foreach ($categories as $category)
+                                <li class="footer__item">
+                                    <a href="{{ route('home.category', $category->id) }}" class="footer__link">{{ $category->name }}</a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="col l-3 m-6 s-12">
@@ -222,12 +197,12 @@
                             </li>
                             <li class="footer__item">
                                 <a href="#" class="footer__link">
-                                    <i class="fas fa-phone"></i> 076 922 0162
+                                    <i class="fas fa-phone"></i> 123 456 789
                                 </a>
                             </li>
                             <li class="footer__item">
                                 <a href="#" class="footer__link">
-                                    <i class="fas fa-envelope"></i> phuonggiang150@gmail.com
+                                    <i class="fas fa-envelope"></i> info@example.com
                                 </a>
                             </li>
                             <li class="footer__item">
@@ -265,19 +240,9 @@
                 </div>
             </div>
             <div class="copyright">
-                <span class="footer__text"> &copy Bản quyền thuộc về <a class="footer__link" href="#"> Phương Giang</a></span>
+                <span class="footer__text"> &copy Bản quyền thuộc về <a class="footer__link" href="#"> vava</a></span>
             </div>
         </div>
-        <!-- Modal Form -->
-        {{-- <div class="ModalForm">
-            @include('account.login')
-            @include('account.register')
-            
-            <div class="up-top" id="upTop" onclick="goToTop()">
-                <i class="fas fa-chevron-up"></i>
-            </div>
-
-        </div> --}}
         <script>
             $('.owl-carousel.hight').owlCarousel({
                 loop: true,
@@ -341,74 +306,10 @@
             })
         </script>
 
-        <script>
-            $(document).ready(function () {
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $('#btn-register').on('click', function () {
-                    const data = $('#register-form').serialize();
-
-                    $.ajax({
-                        url: '/account/register', 
-                        type: 'POST',
-                        data: data,
-                        success: function (res) {
-                            if (res.status === 200) {
-                                toastr.success(res.message);
-
-                                $('#my-Register').removeClass('show').hide(); 
-                                $('#my-Login').addClass('show').show();       
-
-                                $('#register-form')[0].reset();
-                            } else {
-                                toastr.error(res.message);
-                            }
-                        },
-                        error: function (xhr) {
-                            if (xhr.responseJSON?.errors) {
-                                Object.keys(xhr.responseJSON.errors).forEach(function (key) {
-                                    const msg = xhr.responseJSON.errors[key][0];
-                                    $(`#register-form [name="${key}"]`).next('.form-message').text(msg);
-                                });
-                            } else {
-                                toastr.error('Đăng ký thất bại!');
-                            }
-                        }
-                    });
-                });
-
-
-                $('#btn-login').on('click', function () {
-                    const data = {
-                        email: $('#my-Login input[name="email"]').val(),
-                        password: $('#my-Login input[name="password"]').val(),
-                        _token: '{{ csrf_token() }}'
-                    };
-
-                    $.post('{{ route("account.check_login") }}', data)
-                        .done(function (response) {
-                            location.reload(); 
-                            $('#my-Register').removeClass('show').hide(); 
-                            $('#my-Login').addClass('show').hide();
-                        })
-                        .fail(function (xhr) {
-                            const errors = xhr.responseJSON.errors;
-                            $('#my-Login .form-message').html('');
-                            for (const field in errors) {
-                                const message = errors[field][0];
-                                $(`#my-Login input[name="${field}"]`).siblings('.form-message').text(message);
-                            }
-                        });
-                });
-            });
-        </script>
-
         <!-- Script common -->
-        <script src="{{ asset('assets/js/homeScript.js')}}"></script>
         <script src="{{ asset('assets/js/commonscript.js')}}"></script>
+
+        @yield('custom_js')
     </body>
 
 </html>

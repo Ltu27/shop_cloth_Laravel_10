@@ -9,6 +9,14 @@ class Product extends Model
 {
     use HasFactory;
 
+    public const SEARCH_FIELDS = [];
+    public const FROM_FIELDS = [];
+    public const TO_FIELDS = [];
+    public const HAS_FIELDS = [];
+    public const SORT_FIELDS = [];
+    public const IN_SET_FIELDS = [];
+    public const FILTER_FIELDS = [];
+
     public $appends = ['favorited'];
 
     protected $fillable = ['name', 'status', 'price', 'sale_price', 'image', 'category_id', 'description'];

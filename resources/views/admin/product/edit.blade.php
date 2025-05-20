@@ -8,11 +8,17 @@
         <div class="col-md-9">
             <div class="form-group">
                 <label for="">Tên sản phẩm</label>
-                <input type="text" name="name" class="form-control" value="{{ $product->name }}" placeholder="Input fieald">
+                <input type="text" name="name" class="form-control" value="{{ old('name', $product->name) }}" placeholder="Input fieald">
+                @error('name')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="">Mô tả sản phẩm</label>
-                <textarea name="description" class="form-control" placeholder="Product content">{{ $product->description }}</textarea>
+                <textarea name="description" class="form-control" placeholder="Product content">{{ old('description', $product->description) }}</textarea>
+                @error('description')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="">Ảnh khác của sản phẩm</label>
@@ -41,7 +47,6 @@
             <div class="form-group">
                 <label for="">Danh mục sản phẩm</label>
                 <select name="category_id" class="form-control">
-                    <option value="">Chọn 1</option>
                     @foreach ($cats as $cat)
                         <option value="{{ $cat->id }}" {{ $cat->id == $product->category_id ? 'selected' : ''}}>{{ $cat->name }}</option>
                     @endforeach
@@ -49,11 +54,17 @@
             </div>
             <div class="form-group">
                 <label for="">Giá</label>
-                <input type="text" name="price" class="form-control" value="{{ $product->price }}" placeholder="Input fieald">
+                <input type="text" name="price" class="form-control" value="{{ old('price', $product->price) }}" placeholder="Input fieald">
+                @error('price')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="">Giá khuyến mãi</label>
-                <input type="text" name="sale_price" class="form-control" value="{{ $product->sale_price }}" placeholder="Input fieald">
+                <input type="text" name="sale_price" class="form-control" value="{{ old('sale_price', $product->sale_price) }}" placeholder="Input fieald">
+                @error('sale_price')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="">Trạng thái sản phẩm</label>
