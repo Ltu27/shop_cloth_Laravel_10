@@ -39,6 +39,17 @@ class CouponService
             ->paginate($limit);
     }
 
+    public function create(array $data): Coupon
+    {
+        return $this->coupon->create($data);
+    }
+
+    public function update(Coupon $coupon, array $data): Coupon
+    {
+        $coupon->update($data);
+        return $coupon;
+    }
+
     public function applyCoupon(Request $request)
     {
         $coupon = Coupon::where('code', $request->code)->first();

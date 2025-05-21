@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests\Coupon;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterCustomerRequest extends FormRequest
+class CreateCouponRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,12 @@ class RegisterCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:customers,email',
-            'phone' => 'required',
-            'address' => 'required|string|max:255',
-            'gender' => 'required|in:1,0',
-            'password' => 'required|confirmed|min:6',
+            'code' => 'required|unique:coupons,code',
+            'type' => 'required|in:fixed,percentage',
+            'value' => 'required|numeric|min:0',
+            'min_order_amount' => 'nullable|numeric|min:0',
+            'usage_limit' => 'nullable|integer|min:1',
+            'expires_at' => 'nullable|date',
         ];
     }
 }

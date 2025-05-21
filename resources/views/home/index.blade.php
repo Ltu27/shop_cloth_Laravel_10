@@ -14,35 +14,36 @@
         <!-- Slider -->
         <div class="main__slice">
             <div class="slider">
-                <div class="slide active" style="background-image:url(./assets/img/slider/slide-6.jpg)">
-                    <div class="container">
-                        <div class="caption">
-                            <h1>Giảm giá 30%</h1>
-                            <p>Giảm giá cực sốc trong tháng 6!</p>
-                            <a href="listProduct.html" class="btn btn--default">Xem ngay</a>
-
-                        </div>
-                    </div>
-                </div>
+                {{-- <div class="slide active" style="background-image:url(./assets/img/slider/banner-hue-2.jpeg)"> --}}
                 <div class="slide active" style="background-image:url(./assets/img/slider/slide-4.jpg)">
-                    <div class="container">
+                    {{-- <div class="container">
                         <div class="caption">
                             <h1>Giảm giá 30%</h1>
                             <p>Giảm giá cực sốc trong tháng 6!</p>
                             <a href="listProduct.html" class="btn btn--default">Xem ngay</a>
 
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
-                <div class="slide active" style="background-image:url(./assets/img/slider/slide-5.jpg)">
-                    <div class="container">
+                <div class="slide active" style="background-image:url(./assets/img/slider/khuyen-mai-thefaceshop1170.jpg)">
+                    {{-- <div class="container">
                         <div class="caption">
                             <h1>Giảm giá 30%</h1>
                             <p>Giảm giá cực sốc trong tháng 6!</p>
                             <a href="listProduct.html" class="btn btn--default">Xem ngay</a>
 
                         </div>
-                    </div>
+                    </div> --}}
+                </div>
+                <div class="slide active" style="background-image:url(./assets/img/slider/b21a8ca3-60c2-448d-af3d-4e02eee99ab9.webp)">
+                    {{-- <div class="container">
+                        <div class="caption">
+                            <h1>Giảm giá 30%</h1>
+                            <p>Giảm giá cực sốc trong tháng 6!</p>
+                            <a href="listProduct.html" class="btn btn--default">Xem ngay</a>
+
+                        </div>
+                    </div> --}}
                 </div>
             </div>
             <!-- controls  -->
@@ -295,9 +296,11 @@
     const csrfToken = '{{ csrf_token() }}';
     
     $(document).ready(function () {
+        var authCheck = '{{ Auth('cus')->check() ? 'true' : 'false' }}' === 'true';
+        
         loadProductList();
 
-        $(document).on('click', '.addToCart', function (e) {
+        $(document).on('click', '.btn-add-to-cart', function (e) {
             e.preventDefault();
             const productId = $(this).data('id');
 
@@ -316,6 +319,12 @@
                     console.error(err);
                 }
             });
+        });
+
+        $(document).on('click', '.loginToAddCart', function (e) {
+            e.preventDefault();
+            alert('Vui lòng đăng nhập để thêm vào giỏ hàng!');
+            window.location.href = '/account/login';
         });
 
         function loadProductList() {
@@ -337,6 +346,9 @@
                         const percent = product.price && product.sale_price
                             ? Math.round((1 - product.sale_price / product.price) * 100)
                             : '';
+                        const buttonHTML = authCheck
+                            ? `<a href="#" class="addToCart btn-add-to-cart" data-id="${product.id}">Thêm vào giỏ</a>`
+                            : `<a href="#" class="addToCart loginToAddCart" data-id="${product.id}">Thêm vào giỏ</a>`;
 
                         const productHTML = `
                             <div class="col l-2 m-4 s-6">
@@ -355,7 +367,7 @@
                                         </div>` : ''}
                                     </div>
                                     <a href="/product-detail/${product.id}" class="viewDetail">Xem chi tiết</a>
-                                    <a href="#" class="addToCart" data-id="${product.id}">Thêm vào giỏ</a>
+                                    ${buttonHTML}
                                 </div>
                             </div>
                         `;

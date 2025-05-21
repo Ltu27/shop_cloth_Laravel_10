@@ -64,7 +64,7 @@
                             <hr class="mt-5 mb-4 border-secondary-subtle">
                             <div class="d-flex gap-2 justify-content-md-end">
                                 <a href="{{ route('account.register') }}" class="link-secondary">Đăng ký</a>
-                                <a href="#" class="link-secondary">Quên mật khẩu?</a>
+                                <a href="{{ route('account.forgot_password') }}" class="link-secondary">Quên mật khẩu?</a>
                             </div>
                         </div>
                     </div>
@@ -83,10 +83,9 @@
                 position: 'top-center',        
             })
         </script>
-        @endif
+    @endif
 
-        @if(Session::has('no'))
-
+    @if(Session::has('no'))
         <script>
             $.toast({
                 heading: 'Thông báo',
@@ -96,6 +95,6 @@
                 position: 'top-center',        
             })
         </script>
-        @endif
+    @endif
 </body>
 </html>

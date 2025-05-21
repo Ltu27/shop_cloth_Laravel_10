@@ -47,24 +47,30 @@ tabs.forEach((tab, index) => {
 // // $(':radio').change(function() {
 // //     console.log('New star rating: ' + this.value);
 // // });
-// var value = parseInt(document.querySelector('.input-qty').value, 10);
-// var maxProduct = document.querySelector('.input-qty').getAttribute('max')
+function minusProduct(button) {
+    const input = button.parentNode.querySelector('.input-qty');
+    let value = parseInt(input.value, 10);
+    value = isNaN(value) ? 1 : value;
 
-function minusProduct() {
-    if (value > 0) {
-        value = isNaN(value) ? 1 : value;
+    if (value > 1) {
         value--;
     }
 
-    document.querySelector('.input-qty').value = value;
+    input.value = value;
 }
 
-function plusProduct() {
+function plusProduct(button) {
+    const input = button.parentNode.querySelector('.input-qty');
+    let value = parseInt(input.value, 10);
+    const max = parseInt(input.getAttribute('max'), 10);
+
     value = isNaN(value) ? 0 : value;
     value++;
-    if (value > maxProduct) {
-        value = maxProduct;
-        alert('Số sản phẩm trong kho của shop đã đạt  giới hạn')
+
+    if (value > max) {
+        value = max;
+        alert('Số sản phẩm trong kho của shop đã đạt giới hạn');
     }
-    document.querySelector('.input-qty').value = value;
+
+    input.value = value;
 }

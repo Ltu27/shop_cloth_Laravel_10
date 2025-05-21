@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\StatisticController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,6 +33,7 @@ Route::get('/product-detail', [HomeController::class, 'product'])->name('home.pr
 Route::get('/contact-us', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('/favorite/{product}', [HomeController::class, 'favorite'])->name('home.favorite');
 Route::post('/search', [HomeController::class, 'searchProduct'])->name('home.search');
+Route::get('/coupon', [CouponController::class, 'getListCoupon'])->name('coupon.getListCoupon');
 
 Route::group(['prefix' => 'account'], function() {
 
@@ -53,10 +55,10 @@ Route::group(['prefix' => 'account'], function() {
     });
     
     Route::get('/forgot-password', [AccountController::class, 'forgot_password'])->name('account.forgot_password');
-    Route::post('/forgot-password', [AccountController::class, 'check_forgot_password']);
+    Route::post('/forgot-password', [AccountController::class, 'check_forgot_password'])->name('account.check_forgot_password');
 
     Route::get('/reset-password/{token}', [AccountController::class, 'reset_password'])->name('account.reset_password');
-    Route::post('/reset-password/{token}', [AccountController::class, 'check_reset_password']);
+    Route::post('/reset-password/{token}', [AccountController::class, 'check_reset_password'])->name('account.check_reset_password');
 }); 
 
 Route::group(['prefix' => 'cart', 'middleware' => 'customer'], function() {
@@ -96,7 +98,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         'user' => UserController::class,
         'category' => CategoryController::class,
         'product' => ProductController::class,
-        'statistical'=> StatisticController::class
+        'statistical'=> StatisticController::class,
+        'coupon' => CouponController::class,
     ]);
     
     route::get('product-delete-image/{image}', [ProductController::class, 'destroyImage'])->name('product.destroyImage');

@@ -23,10 +23,6 @@ class ForgotPassword extends Mailable
         $this->customer = $data;
         $this->token = $token_data;
     }
-    // public function __construct($data)
-    // {
-    //     $this->customer = $data;
-    // }
 
     /**
      * Get the message envelope.

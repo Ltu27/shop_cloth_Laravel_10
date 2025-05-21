@@ -40,7 +40,7 @@
                         <span></span>
                     </div>
                     <a href="{{ route('home.index') }}" class="header__logo">
-                        <img src="{{ asset('assets/logo.png')}}" alt="">
+                        <img src="{{ asset('assets/logo-web-hue.webp')}}" alt="">
                     </a>
                     <div class="header__search">
                         <div class="header__search-wrap">
@@ -310,6 +310,29 @@
         <script src="{{ asset('assets/js/commonscript.js')}}"></script>
 
         @yield('custom_js')
+        @if(Session::has('ok'))
+            <script>
+                $.toast({
+                    heading: 'Thông báo',
+                    text: '{{ Session::get('ok') }}',
+                    showHideTransition: 'slide',
+                    icon: 'success',
+                    position: 'top-center',        
+                })
+            </script>
+        @endif
+
+        @if(Session::has('no'))
+            <script>
+                $.toast({
+                    heading: 'Thông báo',
+                    text: '{{ Session::get('no') }}',
+                    showHideTransition: 'slide',
+                    icon: 'error',
+                    position: 'top-center',        
+                })
+            </script>
+        @endif
     </body>
 
 </html>

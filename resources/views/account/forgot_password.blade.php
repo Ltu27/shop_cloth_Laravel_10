@@ -1,64 +1,71 @@
-@extends('master.main')
-@section('title', 'Quên mật khẩu')
-@section('main')
-    
-<!-- main-area -->
-<main>
-
-    <!-- breadcrumb-area -->
-    <section class="breadcrumb-area tg-motion-effects breadcrumb-bg" data-background="uploads/bg/breadcrumb_bg.jpg">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quên mật khẩu</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.4/components/logins/login-4/assets/css/login-4.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-toast-plugin/1.3.2/jquery.toast.min.js"></script>
+</head>
+<body>
+    <section class="p-3 p-md-4 p-xl-5">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-content">
-                        <h2 class="title">Quên mật khẩu</h2>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Trang chủ</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Quên mật khẩu</li>
-                            </ol>
-                        </nav>
+            <div class="card border-light-subtle shadow-sm">
+                <div class="row g-0">
+                    <div class="col-12 col-md-6">
+                        <img class="img-fluid rounded-start w-100 h-100 object-fit-cover"
+                            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                            alt="Login Image">
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- breadcrumb-area-end -->
-
-    <!-- contact-area -->
-    <section class="contact-area">
-        
-        <div class="contact-wrap">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-6">
-                        <div class="contact-content">
-                            <div class="section-title mb-15">
-                                <span class="sub-title">Lấy mật khẩu mới</span>
+                    <div class="col-12 col-md-6">
+                        <div class="card-body p-3 p-md-4 p-xl-5">
+                            <div class="mb-5">
+                                <h3>Quên mật khẩu</h3>
                             </div>
-                            <form action="" method="POST">
+                            <p class="text-muted">Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn một liên kết để đặt lại mật khẩu của bạn.</p>
+
+                            <form method="POST" action="{{ route('account.check_forgot_password') }}">
                                 @csrf
-                                <div class="contact-form-wrap">
-                                    <div class="form-grp">
-                                        <input name="email" type="email" placeholder="Nhập email *" required>
-                                        @error('email')
-                                            <div class="help-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <button type="submit">Gửi đến email</button>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email của bạn <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                                    @error('email')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
+                                <button type="submit" class="btn btn-primary">Gửi link đặt lại mật khẩu</button>
+                                <a href="{{ route('account.login') }}" class="btn btn-link">Quay lại đăng nhập</a>
                             </form>
-                            <p class="ajax-response mb-0"></p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- contact-area-end -->
+    @if(Session::has('ok'))
+        <script>
+            $.toast({
+                heading: 'Thông báo',
+                text: '{{ Session::get('ok') }}',
+                showHideTransition: 'slide',
+                icon: 'success',
+                position: 'top-center',        
+            })
+        </script>
+    @endif
 
-</main>
-<!-- main-area-end -->
-
-
-@endsection
+    @if(Session::has('no'))
+        <script>
+            $.toast({
+                heading: 'Thông báo',
+                text: '{{ Session::get('no') }}',
+                showHideTransition: 'slide',
+                icon: 'error',
+                position: 'top-center',        
+            })
+        </script>
+    @endif
+</body>
+</html>

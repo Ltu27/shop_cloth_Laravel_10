@@ -124,12 +124,11 @@ class AccountController extends Controller
         $customer = Customer::where('email', $req->email)->first();
 
         $token = Str::random(40);
-        $tokenData = [
-            'email' => $req->email,
-            'token' => $token
-        ];
         
-        if (CustomerResetToken::create($tokenData)) {
+        if (CustomerResetToken::updateOrCreate(
+            ['email' => $req->email],      
+            ['token' => $token]             
+        )) {
             Mail::to($req->email)->send(new ForgotPassword($customer, $token));
             return redirect()->back()->with('ok', 'Send mail successfully, please check email to continue');
         }
@@ -203,8 +202,8 @@ class AccountController extends Controller
         
         $check = $customer->update($data);
         if ($check) {
-            return redirect()->back()->with('ok', 'Reset your password successfully');
+            return redirect()->route('account.login')->with('ok', 'Thay đổi mật khẩu thành công, bạn có thể đăng nhập ngay bây giờ!');
         }
-        return redirect()->back()->with('no', 'Something error, please check again');
+        return redirect()->back()->with('no', 'Có lỗi xảy ra, vui lòng kiểm tra lại!');
     }
 }
