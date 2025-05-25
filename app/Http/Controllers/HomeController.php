@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Banner;
+use App\Http\Resources\Coupon\ListCouponResoure;
 use App\Models\Category;
 use App\Models\Favorite;
 use App\Models\Product;
-use App\Services\CategoryService;
+use App\Services\{
+    CategoryService,
+    CouponService,
+};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,6 +17,7 @@ class HomeController extends Controller
 {
     public function __construct(
         protected CategoryService $categoryService,
+        protected CouponService $couponService,
     )
     {
         
@@ -62,6 +66,23 @@ class HomeController extends Controller
 
     public function contact() {
         return view('home.contact');
+    }
+
+    public function getListCoupon(Request $request)
+    {
+        $filters = $request->query('filters', []);
+        $has = $request->query('has', []);
+        $search = $request->query('search', []);
+        $sorts = $request->query('sorts', []);
+        $from = $request->query('from', []);
+        $to = $request->query('to', []);
+        $limit = $request->query('limit', static::LIMIT);
+        $freeSearch = $request->query('q', '');
+        $data = $this->couponService->getByConditions($filters, $has, $sorts, $search, $freeSearch, [$from, $to], $limit);
+        
+        $data = ListCouponResoure::collection($data->items());
+
+        return view('home.coupon.index', compact('data'));
     }
 
     public function favorite($product_id) {

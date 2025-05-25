@@ -148,6 +148,9 @@
                     <li class="header__nav-item">
                         <a href="contact.html" class="header__nav-link">Liên Hệ</a>
                     </li>
+                    <li class="header__nav-item">
+                        <a href="{{ route('home.getListCoupon')}}" class="header__nav-link">Nhận mã ưu đãi</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -304,6 +307,32 @@
                     }
                 }
             })
+
+            function calculateFinalPrice(product) {
+                let finalPrice = product.price;
+                let percent = 0;
+
+                if (product.coupon) {
+                    const coupon = product.coupon;
+                    const value = parseFloat(coupon.value);
+
+                    if (coupon.type === 'percentage') {
+                        const discount = product.price * (value / 100);
+                        finalPrice = product.price - discount;
+                        percent = Math.round((discount / product.price) * 100);
+                    } else if (coupon.type === 'fixed') {
+                        finalPrice = product.price - value;
+                        percent = Math.round((value / product.price) * 100);
+                    }
+
+                    if (finalPrice < 0) finalPrice = 0;
+                }
+
+                return {
+                    finalPrice,
+                    percent
+                };
+            }
         </script>
 
         <!-- Script common -->

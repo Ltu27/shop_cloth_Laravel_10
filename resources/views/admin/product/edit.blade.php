@@ -60,10 +60,15 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Giá khuyến mãi</label>
-                <input type="text" name="sale_price" class="form-control" value="{{ old('sale_price', $product->sale_price) }}" placeholder="Input fieald">
-                @error('sale_price')
-                    <span class="text-danger">{{ $message }}</span>
+                <label for="">Mã khuyến mại</label>
+                <select name="coupon_id" class="form-control">
+                    <option value="">Chọn mã khuyến mại</option>
+                    @foreach ($coupons as $coupon)
+                        <option value="{{ $coupon->id }}" {{ $coupon->id == $product->coupon_id ? 'selected' : ''}}>{{ $coupon->code }}</option>
+                    @endforeach
+                </select>
+                @error('coupon_id')
+                    <span class="help-block has-error text-danger">{{ $message }}</span>
                 @enderror
             </div>
             <div class="form-group">

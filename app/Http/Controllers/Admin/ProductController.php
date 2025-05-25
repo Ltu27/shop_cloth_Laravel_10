@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\CreateProductRequest;
+use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Http\Resources\Product\ListProductResource;
 use App\Models\Category;
 use App\Models\Product;
@@ -36,7 +37,11 @@ class ProductController extends Controller
     public function create()
     {
         $cats = Category::orderBy('name', 'ASC')->select('id', 'name')->get();
-        return view('admin.product.create', compact('cats'));
+        $coupons = $this->service->getListCoupon();
+        return view('admin.product.create', compact(
+            'coupons', 
+            'cats'
+        ));
     }
 
     /**
@@ -67,7 +72,7 @@ class ProductController extends Controller
             }
             return redirect()->route('product.index')->with('ok', 'Create new product successfully');
         }
-        return redirect()->back()->with('no', 'Something wrong, please check again');
+        return redirect()->back()->with('no', 'Có lỗi đã xảy ra, vui lòng thử lại!');
     }
 
     /**
@@ -85,25 +90,20 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $cats = Category::orderBy('name', 'ASC')->select('id', 'name')->get();
-        return view('admin.product.edit', compact('cats', 'product'));
+        $coupons = $this->service->getListCoupon();
+        return view('admin.product.edit', compact(
+            'cats', 
+            'product',
+            'coupons',
+        ));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $request->validate([
-            'name' => 'required|min:4|max:150|unique:products,name,'.$product->id,
-            'description' => 'required|min:4',
-            'price' => 'required|numeric',
-            'sale_price' => 'required|numeric|lte:price',
-            'img' => 'file|mimes:jpg,jpeg,png,gif',
-            'category_id' => 'required|exists:categories,id'
-
-        ]);
-
-        $data = $request->only('name', 'price', 'sale_price', 'status', 'description', 'category_id');
+        $data = $request->validated();
 
         if ($request->has('img')) {
             $img_name = $product->image;
@@ -142,9 +142,9 @@ class ProductController extends Controller
                     ]);
                 }
             }
-            return redirect()->route('product.index')->with('ok', 'Update product successfully');
+            return redirect()->route('product.index')->with('ok', 'Cập nhật thành công!');
         }
-        return redirect()->back()->with('no', 'Something wrong, please check again');
+        return redirect()->back()->with('no', 'Có lỗi đã xảy ra, vui lòng thử lại!');
     }
 
     /**
@@ -180,7 +180,7 @@ class ProductController extends Controller
             }
         }
         
-        return redirect()->back()->with('no', 'Something wrong, please check again');
+        return redirect()->back()->with('no', 'Có lỗi đã xảy ra, vui lòng thử lại!');
     }
 
     public function destroyImage(ProductImage $image)
@@ -193,7 +193,7 @@ class ProductController extends Controller
             }
             return redirect()->back()->with('ok', 'Delete image successfully');
         }
-        return redirect()->back()->with('no', 'Something wrong, please check again');
+        return redirect()->back()->with('no', 'Có lỗi đã xảy ra, vui lòng thử lại!');
     }
 
     public function getListProduct(Request $request): JsonResponse

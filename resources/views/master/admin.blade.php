@@ -159,16 +159,16 @@
       <div class="box">
         <div class="box-body">
           @if (Session::has('ok'))
-        <div class="alert alert-success" role="alert">
-            {{ Session::get('ok') }}
-        </div>
-        @endif
+              <div class="alert alert-success" role="alert" id="alert-ok">
+                  {{ Session::get('ok') }}
+              </div>
+          @endif
 
-        @if (Session::has('no'))
-        <div class="alert alert-danger" role="alert">
-            {{ Session::get('no') }}
-        </div>
-        @endif
+          @if (Session::has('no'))
+              <div class="alert alert-danger" role="alert" id="alert-no">
+                  {{ Session::get('no') }}
+              </div>
+          @endif
 
           @yield('main')
         </div>
@@ -196,6 +196,16 @@
 <!-- AdminLTE for demo purposes -->
 <script src="ad_assets/dist/js/demo.js"></script>
 <script src="http://cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
+
+<script>
+  setTimeout(() => {
+      const okAlert = document.getElementById('alert-ok');
+      if (okAlert) okAlert.style.display = 'none';
+
+      const noAlert = document.getElementById('alert-no');
+      if (noAlert) noAlert.style.display = 'none';
+  }, 3000);
+</script>
 @yield('js')
 </body>
 </html>

@@ -19,7 +19,16 @@ class Product extends Model
 
     public $appends = ['favorited'];
 
-    protected $fillable = ['name', 'status', 'price', 'sale_price', 'image', 'category_id', 'description'];
+    protected $fillable = [
+        'name', 
+        'status', 
+        'price', 
+        'sale_price', 
+        'image', 
+        'category_id', 
+        'coupon_id',
+        'description',
+    ];
 
     public function cat() {
         return $this->hasOne(Category::class, 'id', 'category_id');
@@ -37,5 +46,10 @@ class Product extends Model
     public function comment() 
     {
         return $this->hasMany(Comment::class, 'product_id', 'id');
+    }
+
+    public function coupon() 
+    {
+        return $this->belongsTo(Coupon::class, 'coupon_id', 'id');
     }
 }

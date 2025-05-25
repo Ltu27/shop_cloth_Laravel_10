@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -9,6 +10,7 @@ class ProductService
 {
     public function __construct(
         protected Product $product,
+        protected Coupon $coupon
     )
     {
     }
@@ -37,6 +39,11 @@ class ProductService
             ->filterBy($filters, Product::FILTER_FIELDS)
             ->with($relation)
             ->paginate($limit);
+    }
+
+    public function getListCoupon()
+    {
+        return $this->coupon->orderBy('id', 'DESC')->get();
     }
 
 }

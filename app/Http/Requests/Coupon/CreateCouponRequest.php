@@ -24,8 +24,8 @@ class CreateCouponRequest extends FormRequest
         return [
             'code' => 'required|unique:coupons,code',
             'type' => 'required|in:fixed,percentage',
-            'value' => 'required|numeric|min:0',
-            'min_order_amount' => 'nullable|numeric|min:0',
+            'value' => 'required|string|min:0',
+            'min_order_amount' => 'nullable|string|min:0',
             'usage_limit' => 'nullable|integer|min:1',
             'expires_at' => 'nullable|date',
         ];

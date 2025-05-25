@@ -46,7 +46,9 @@
                     <h3 class="productInfo__name">{{ $product->name }}</h3>
     
                     <div class="productInfo__price">
-                        {{ number_format($product->price, 0, ',', '.') }} <span class="priceInfo__unit">đ</span>
+                        {{ number_format($product->coupon ? 
+                        caculatePriceOfProduct($product->price, $product->coupon->value, $product->coupon->type) 
+                        : $product->price, 0, ',', '.') }} <span class="priceInfo__unit">đ</span>
                     </div>
     
                     <div class="productInfo__description">

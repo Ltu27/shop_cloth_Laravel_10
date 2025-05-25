@@ -14,7 +14,7 @@
             </div>
             <div class="form-group">
                 <label for="">Mô tả sản phẩm</label>
-                <textarea name="description" id="note-editable" value="{{ old('description') }}" class="form-control description" placeholder="Product content"></textarea>
+                <textarea name="description" id="note-editable" value="{{ old('description') }}" class="form-control description"></textarea>
                 @error('description')
                     <span class="help-block has-error text-danger">{{ $message }}</span>
                 @enderror
@@ -47,9 +47,14 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="">Giá khuyến mãi</label>
-                <input type="text" name="sale_price" value="{{ old('sale_price') }}" class="form-control" id="" placeholder="Nhập dữ liệu">
-                @error('sale_price')
+                <label for="">Mã khuyến mại</label>
+                <select name="coupon_id" class="form-control">
+                    <option value="">Chọn mã khuyến mại</option>
+                    @foreach ($coupons as $coupon)
+                        <option value="{{ $coupon->id }}">{{ $coupon->code }}</option>
+                    @endforeach
+                </select>
+                @error('coupon_id')
                     <span class="help-block has-error text-danger">{{ $message }}</span>
                 @enderror
             </div>
@@ -95,9 +100,9 @@
     $('.description').summernote({
         height: 250,
         callbacks: {
-            onInit: function() {
-                $(".note-editable").html("<pre>Cải bẹ xanh 400g</pre>");
-            }
+            // onInit: function() {
+            //     $(".note-editable").html("<pre>Phấn dặm trang điểm</pre>");
+            // }
         }
     });
 

@@ -6,7 +6,7 @@ use App\Models\Coupon;
 use App\Rules\PriceGreaterThanValueFixed;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProductRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -28,18 +28,18 @@ class CreateProductRequest extends FormRequest
         if ($this->filled('coupon_id')) {
             $coupon = Coupon::find($this->coupon_id);
         }
-    
+        
         return [
-            'name' => 'required|max:150|unique:products',
-            'description' => 'required',
+            'name' => 'required|min:4|max:150|unique:products,name,'.$this->product->id,
+            'description' => 'required|min:4',
             'price' => [
-                'required',
+                'required', 
                 'numeric',
                 new PriceGreaterThanValueFixed($coupon),
             ],
-            'img' => 'required|file|mimes:jpg,jpeg,png,webp',
-            'category_id' => 'required|exists:categories,id',
             'coupon_id' => 'nullable|exists:coupons,id',
+            'img' => 'file|mimes:jpg,jpeg,png,gif',
+            'category_id' => 'required|exists:categories,id'
         ];
     }
 }

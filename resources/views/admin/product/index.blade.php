@@ -32,6 +32,7 @@
                     <th>Danh mục</th>
                     <th>Giá</th>
                     <th>Hình ảnh</th>
+                    <th>Phiếu giảm giá</th>
                     <th>Trạng thái sản phẩm</th>
                     <th>Hành động</th>
                 </tr>
@@ -42,10 +43,25 @@
                     <td scope="row">{{ $loop->index+1}}</td>
                     <td>{{ $model->name }}</td>
                     <td>{{ $model->cat->name }}</td> 
-                    <td>{{ $model->price }} <span class="label label-success">{{ $model->sale_price }}</span></td>
+                    <td>
+                        {{ $model->price }} 
+                        @if ($model->coupon)
+                            <span class="label label-success">
+                                {{ $model->coupon ? 
+                                caculatePriceOfProduct($model->price, $model->coupon->value, $model->coupon->type) 
+                                : '' }}
+                            </span>
+                        @endif
+                    </td>
                     <td>
                         <img src="uploads/product/{{ $model->image }}" width="40" alt="Ảnh sản phẩm">
-                    </td>
+                    </td>n
+                    <td>
+                        @if ($model->coupon_id)
+                            {{ $model->coupon->code }}
+                        @else
+                            Không có
+                        @endif
                     <td>{{ $model->status == 0 ? 'Tạm ẩn' :'Hiển thị' }}</td>
                     <td class="text-right">
                         <form action="{{ route('product.destroy', $model->id) }}" method="post" onsubmit="return confirm('Are you want to delete?')">

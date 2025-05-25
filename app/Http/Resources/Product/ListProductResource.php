@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Product;
 
 use App\Http\Resources\Category\ShowCategoryResource;
+use App\Http\Resources\Coupon\ShowCouponResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -23,6 +24,7 @@ class ListProductResource extends JsonResource
             'sale_price' => $this->sale_price,
             'status' => $this->status,
             'category' => new ShowCategoryResource($this->cat),
+            'coupon' => new ShowCouponResource($this->coupon),
             'description' => $this->description,
         ];
     }

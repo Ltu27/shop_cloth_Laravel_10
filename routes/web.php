@@ -33,6 +33,7 @@ Route::get('/product-detail', [HomeController::class, 'product'])->name('home.pr
 Route::get('/contact-us', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('/favorite/{product}', [HomeController::class, 'favorite'])->name('home.favorite');
 Route::post('/search', [HomeController::class, 'searchProduct'])->name('home.search');
+Route::get('/list-coupon', [HomeController::class, 'getListCoupon'])->name('home.getListCoupon');
 Route::get('/coupon', [CouponController::class, 'getListCoupon'])->name('coupon.getListCoupon');
 
 Route::group(['prefix' => 'account'], function() {
