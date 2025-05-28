@@ -2,9 +2,8 @@
 @section('title', 'Trang chủ')
 
 @section('custom_css')
-<link href="{{ asset('assets/css/home.css')}}" rel="stylesheet" />
-
-
+<link href="./assets/css/home.css" rel="stylesheet" />
+@endsection
 @section('main')
     
 <!-- main-area -->
