@@ -9,7 +9,9 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     public function index() {
-        return view('home.cart');
+        $cus_id = auth('cus')->id();
+        $carts = Cart::with('prod')->where('customer_id', $cus_id)->get();
+        return view('home.cart', compact('carts'));
     }
 
     public function add(Product $product, Request $req) {
@@ -77,4 +79,27 @@ class CartController extends Controller
         ])->delete();
         return redirect()->back()->with('ok', __('common.cart.delete_all_product'));
     }
+
+    public function remove(Cart $cart) {
+        $cus_id = auth('cus')->id();
+        if ($cart->customer_id != $cus_id) {
+            return redirect()->back()->with('no', 'Không có quyền xóa sản phẩm này');
+        }
+    
+        $cart->delete();
+        return redirect()->back()->with('ok', __('common.cart.delete_product'));
+    }
+
+    public function updateAll(Request $request) {
+        $cus_id = auth('cus')->id();
+        foreach ($request->quantity as $cart_id => $qty) {
+            $cart = Cart::where('id', $cart_id)->where('customer_id', $cus_id)->first();
+            if ($cart && $qty > 0) {
+                $cart->quantity = floor($qty);
+                $cart->save();
+            }
+        }
+        return redirect()->route('cart.index')->with('ok', __('common.cart.update_all'));
+    }
+    
 }
