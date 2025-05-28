@@ -5,11 +5,34 @@
 <link rel="stylesheet" href="{{ asset('assets/owlCarousel/assets/owl.theme.default.min.css')}}">
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/product.css')}}">
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
+<style>
+    .variant-options {
+        display: flex;
+        gap: 8px;
+        margin: 10px 0;
+    }
+    .variant-color {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ccc;
+        box-shadow: 0 0 2px rgba(0,0,0,0.3);
+    }
+    .variant-color.active {
+        border: 2px solid #333;
+    }
+</style>
+@endsection
 
 
 @section('main')
 <!-- main-area -->
 <main>
+@php
+    $firstVariant = $product->variants->first();
+@endphp
+
 <div class="main">
     <div class="grid wide">
         <div class="productInfo">
@@ -46,16 +69,47 @@
                     <h3 class="productInfo__name">{{ $product->name }}</h3>
     
                     <div class="productInfo__price">
-                        {{ number_format($product->coupon ? 
-                        caculatePriceOfProduct($product->price, $product->coupon->value, $product->coupon->type) 
-                        : $product->price, 0, ',', '.') }} <span class="priceInfo__unit">đ</span>
+                        <span id="main-price">
+                            {{ number_format($firstVariant ? $firstVariant->variant_price : (
+                                $product->coupon ? 
+                                    caculatePriceOfProduct($product->price, $product->coupon->value, $product->coupon->type)
+                                    : $product->price
+                            ), 0, ',', '.') }}
+                        </span>
+                        <span class="priceInfo__unit">đ</span>
                     </div>
+                    
+                    <p class="productIndfo__category-text">Số lượng trong kho: 
+                        {{ $firstVariant ? $firstVariant->stock_quantity : $product->stock_quantity }}</p>
+                    @if ($firstVariant)
+                        <p class="productIndfo__category-text">Ngày sản xuất: {{ $firstVariant->production_date }}</p>
+                        <p class="productIndfo__category-text">Hạn sử dụng: {{ $firstVariant->expiration_date }}</p>
+                    @endif
+                    
     
                     <div class="productInfo__description">
                         {!! nl2br(e($product->description)) !!}
                     </div>
     
                     <div class="productInfo__addToCart">
+                        @if($product->variants->count())
+                            <div class="productInfo__variants">
+                                <label>Chọn màu:</label>
+                                <div class="variant-options">
+                                    @foreach($product->variants as $variant)
+                                        <span class="variant-color" 
+                                            data-price="{{ number_format($variant->variant_price, 0, ',', '.') }}"
+                                            data-stock="{{ $variant->stock_quantity }}"
+                                            data-production="{{ $variant->production_date }}"
+                                            data-expiration="{{ $variant->expiration_date }}"
+                                            style="background-color: {{ $variant->variant_color }};" 
+                                            title="{{ $variant->variant_color }}">
+                                        </span>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
+
                         <div class="buttons_added">
                             <input class="minus is-form" type="button" value="-" onclick="minusProduct()">
                             <input aria-label="quantity" class="input-qty" max="10" min="1" name="" type="number" value="1">
@@ -210,6 +264,21 @@
             }
         }
     })
+
+    $('.variant-color').on('click', function () {
+        $('.variant-color').removeClass('active');
+        $(this).addClass('active');
+
+        let price = $(this).data('price');
+        let stock = $(this).data('stock');
+        let production = $(this).data('production');
+        let expiration = $(this).data('expiration');
+
+        $('#main-price').text(price);
+        $('#stock-quantity').text(stock);
+        $('#production-date').text(production);
+        $('#expiration-date').text(expiration);
+    });
 </script>
 <script>
     function calcRate(r) {

@@ -21,4 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('product')->group(function () {
     Route::get('/', [ProductController::class, 'getListProduct']);
+    Route::get('/get-variants/{id}', [ProductController::class, 'getVariants']);
+    Route::post('/save-variants', [ProductController::class, 'saveVariants']);
 });

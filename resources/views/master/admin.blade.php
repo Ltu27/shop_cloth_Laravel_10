@@ -8,7 +8,7 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
-  <link rel="stylesheet" href="ad_assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ asset('ad_assets/bootstrap/css/bootstrap.min.css')}}">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   <!-- Ionicons -->
@@ -188,7 +188,7 @@
 <!-- Bootstrap 3.3.6 -->
 <script src="ad_assets/bootstrap/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="ad_assets/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="{{ asset('ad_assets/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <!-- FastClick -->
 <script src="ad_assets/plugins/fastclick/fastclick.js"></script>
 <!-- AdminLTE App -->

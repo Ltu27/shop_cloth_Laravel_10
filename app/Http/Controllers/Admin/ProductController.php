@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Product\CreateProductRequest;
 use App\Http\Requests\Admin\Product\UpdateProductRequest;
+use App\Http\Requests\CreateProductVariantRequest;
 use App\Http\Resources\Product\ListProductResource;
+use App\Http\Resources\Product\Variant\ListProductVariantResource;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
@@ -91,6 +93,7 @@ class ProductController extends Controller
     {
         $cats = Category::orderBy('name', 'ASC')->select('id', 'name')->get();
         $coupons = $this->service->getListCoupon();
+        $product = $this->service->getDetailProduct($product->id);
         return view('admin.product.edit', compact(
             'cats', 
             'product',
@@ -215,5 +218,25 @@ class ProductController extends Controller
                 'limit' => $data->perPage(),
             ]
         );
+    }
+
+    public function getVariants(Request $request): JsonResponse
+    {
+        $data = $this->service->getVariants($request->id);
+        return $this->success(
+            ListProductVariantResource::collection($data)
+        );
+    }
+
+    public function saveVariants(CreateProductVariantRequest $request): JsonResponse
+    {
+        $data = $request->validated();
+        $result = $this->service->saveVariants($data);
+        if (!$result) {
+            return $this->failure();
+        }
+
+        return $this->success(
+            ListProductVariantResource::collection($result));
     }
 }

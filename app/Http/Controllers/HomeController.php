@@ -60,7 +60,11 @@ class HomeController extends Controller
     }
 
     public function product(Product $product) {
-        $product->load(['cat', 'images']);
+        $product->load([
+            'cat', 
+            'images',
+            'variants',
+        ]);
         return view('home.product.product', compact('product'));
     }
 
